@@ -7,8 +7,7 @@ from time import sleep
 users = {"Spencer Karby":"l + bozo + ratio", "Owen Reaser":"academic weapon", "Michael Tomczak":"Genius", "Parker Dillon": "69420"}
 use = ["Spencer Karby", "Owen Reaser", "Michael Tomczak", "Parker Dillon"]
 admins = {"Walker Spittal":{"adminpass": "Hamilton is awesome", "masterpassword": "Avery", "clearance": 8}, "Avery Lassiter":{"adminpass": "coolest person alive", "masterpassword": "Walker", "clearance": 4}}
-userinfotempvariablebecauseitsabouttogetwaybetter = {"Spencer Karby":{"balance":10, "deposits":[], "withdrawals":[], "transfers":[], "pin": "1234"}, "Owen Reaser":{"balance":100000, "deposits":[], "withdrawals":[], "transfers":[], "pin": "7676"}, "Michael Tomczak":{"balance":904730957, "deposits":[], "withdrawals":[], "transfers":[], "pin": "8888"}, 
-"Parker Dillon":{"balance":9820939709827390, "deposits":[], "withdrawals":[], "transfers":[], "pin": "1234"}}
+userinfotempvariablebecauseitsabouttogetwaybetter = {"Spencer Karby":{"balance":10, "deposits":[], "withdrawals":[], "transfers":[], "pin": "1234"}, "Owen Reaser":{"balance":100000, "deposits":[], "withdrawals":[], "transfers":[], "pin": "7676"}, "Michael Tomczak":{"balance":904730957, "deposits":[], "withdrawals":[], "transfers":[], "pin": "8888"}, "Parker Dillon":{"balance":9820939709827390, "deposits":[], "withdrawals":[], "transfers":[], "pin": "1234"}}
 userinfo = [
  #{"username"        :[Name,              password/adminpass,     admin, pin,    bal,    [d],[w],[t],cl,mstrpass"]}
   {"Spencer Karby"   :["Spencer Karby",   "l + bozo + ratio",     False, "1234", 10,     [], [], [], 1, False]},
