@@ -1,5 +1,3 @@
-# if name1.lower() == ("walker" or "walker spittal") or ("avery" or "avery lassiter") and name2.lower() == ("walker" or "walker spittal") or ("avery" or "avery lassiter") and name1.lower() != name2.lower():
-# don't think I don't see this (Ima show to Avery at lunch lol)
 from datetime import datetime
 from time import sleep
 
