@@ -1,10 +1,23 @@
-from datetime import datetime; from time import sleep
+# if name1.lower() == ("walker" or "walker spittal") or ("avery" or "avery lassiter") and name2.lower() == ("walker" or "walker spittal") or ("avery" or "avery lassiter") and name1.lower() != name2.lower():
+# don't think I don't see this (Ima show to Avery at lunch lol)
+from datetime import datetime
+from time import sleep
 
 
 users = {"Spencer Karby":"l + bozo + ratio", "Owen Reaser":"academic weapon", "Michael Tomczak":"Genius", "Parker Dillon": "69420"}
 use = ["Spencer Karby", "Owen Reaser", "Michael Tomczak", "Parker Dillon"]
 admins = {"Walker Spittal":{"adminpass": "Hamilton is awesome", "masterpassword": "Avery", "clearance": 8}, "Avery Lassiter":{"adminpass": "coolest person alive", "masterpassword": "Walker", "clearance": 4}}
-userinfo = {"Spencer Karby":{"balance":10, "deposits":[], "withdrawals":[], "transfers":[], "pin": "1234"}, "Owen Reaser":{"balance":100000, "deposits":[], "withdrawals":[], "transfers":[], "pin": "7676"}, "Michael Tomczak":{"balance":904730957, "deposits":[], "withdrawals":[], "transfers":[], "pin": "8888"}, "Parker Dillon":{"balance":9820939709827390, "deposits":[], "withdrawals":[], "transfers":[], "pin": "1234"}}
+userinfotempvariablebecauseitsabouttogetwaybetter = {"Spencer Karby":{"balance":10, "deposits":[], "withdrawals":[], "transfers":[], "pin": "1234"}, "Owen Reaser":{"balance":100000, "deposits":[], "withdrawals":[], "transfers":[], "pin": "7676"}, "Michael Tomczak":{"balance":904730957, "deposits":[], "withdrawals":[], "transfers":[], "pin": "8888"}, 
+"Parker Dillon":{"balance":9820939709827390, "deposits":[], "withdrawals":[], "transfers":[], "pin": "1234"}}
+userinfo = [
+ #{"username"        :[Name,              password/adminpass,     admin, pin,    bal,    [d],[w],[t],cl,mstrpass"]}
+  {"Spencer Karby"   :["Spencer Karby",   "l + bozo + ratio",     False, "1234", 10,     [], [], [], 1, False]},
+  {"Owen Reaser"     :["Owen Reaser",     "academic weapon",      True,  "7676", 100000, [], [], [], 8, "bestatcoding"]},
+  {"Micheal Tomkzak" :["Micheal Tomkzak", "Genius",               False, "8888", 904957, [], [], [], 1, False]},
+  {"Parker Dillon"   :["Parker Dillon",   "69420",                False, "1234", 982739, [], [], [], 1, False]},
+  {"Walker Spittal"  :["Walker Spittal",  "Hamilton is awesome",  True,  "7727", 1,      [], [], [], 8, "Avery"]},
+  {"Avery Lassiter"  :["Avery Lassiter",  "coolest person alive", True,  "0911", 1,      [], [], [], 4, "Walker"]}
+]
 
 def homescreen():
     print("     --- Welcome to WS Banking ---\n         -------------------\n        /     Raleigh NC    \ \n        |"+ str(datetime.now()).split(".")[0] + "|\n        \                   /\n         -------------------\n\n1. Login\n2. Exit")
@@ -37,11 +50,11 @@ def userlogin(users):
     password = input("Enter Password")
     if username not in users:
       print("Invalid Username")
-    elif int(password) != users[username]:
+    elif password != users[username]:
       print("Wrong Password")
     else:
       print("Welcome " + username)
-      menu(users, userinfo, username, password)
+      menu(users, userinfotempvariablebecauseitsabouttogetwaybetter, username, password)
 
 def adminlogin(admins):
   while True:  
@@ -54,82 +67,83 @@ def adminlogin(admins):
       print("Invalid Password, Please try again")
     else:
       print("\nWelcome " + adminname)
-      admin(users, userinfo, admins, adminname)
+      admin(users, userinfotempvariablebecauseitsabouttogetwaybetter, admins, adminname)
 
-def menu(users, userinfo, username, password):
-  print("1. Please enter the service number\n1. Withdraw Money\n2. Deposit Money\n3. Transfer Money\n4. My Account Information\n5. Change Password\n6. bLogout")
+def menu(users, userinfotempvariablebecauseitsabouttogetwaybetter, username, password):
+  print("Please enter the service number\n1. Withdraw Money\n2. Deposit Money\n3. Transfer Money\n4. My Account Information\n5. Change Password\n6. Logout")
   while True:
     ask = input("Please choose a service")
     if ask == "1":
       withdrawl = input("Please enter withdrawl amount")
-      if float(withdrawl) <= userinfo[username]["balance"]:
-        userinfo[username]["balance"] -= float(withdrawl)
-        userinfo[username]["withdrawals"].append((withdrawl, str(datetime.now()).split(".")[0]))
-        print(str(withdrawl) + "$ withdrawn from your account\nnew balance: $" + str(userinfo[username]["balance"]) + "\nReturning to main menu...")
-        menu(users, userinfo, username, password)
-      elif float(withdrawl) > userinfo[username]["balance"]:
-        print("You don't have enough money, your current balance is: " + str(userinfo[username]["balance"]))
+      if float(withdrawl) <= userinfotempvariablebecauseitsabouttogetwaybetter[username]["balance"]:
+        userinfotempvariablebecauseitsabouttogetwaybetter[username]["balance"] -= float(withdrawl)
+        userinfotempvariablebecauseitsabouttogetwaybetter[username]["withdrawals"].append((withdrawl, str(datetime.now()).split(".")[0]))
+        print("$" + str(withdrawl) + " withdrawn from your account\nnew balance: $" + str(userinfotempvariablebecauseitsabouttogetwaybetter[username]["balance"]) + "\nReturning to main menu...")
+        menu(users, userinfotempvariablebecauseitsabouttogetwaybetter, username, password)
+      elif float(withdrawl) > userinfotempvariablebecauseitsabouttogetwaybetter[username]["balance"]:
+        print("You don't have enough money, your current balance is: " + str(userinfotempvariablebecauseitsabouttogetwaybetter[username]["balance"]))
       else:
         print("Bad Input")
     elif ask == "2":
       while True:  
         deposit = input("How much would you like to deposit")
-        userinfo[username]["balance"] += float(deposit)
-        userinfo[username]["deposits"].append((deposit, str(datetime.now()).split(".")[0]))
-        print(deposit + "$ had been added to your account\nnew balance: " + userinfo[username]["balance"] + "\nResturning to main menu...")
-        menu(users, userinfo, username, password)
+        userinfotempvariablebecauseitsabouttogetwaybetter[username]["balance"] += float(deposit)
+        userinfotempvariablebecauseitsabouttogetwaybetter[username]["deposits"].append((deposit, str(datetime.now()).split(".")[0]))
+        print("$" + deposit + " had been added to your account\nnew balance: " + str(userinfotempvariablebecauseitsabouttogetwaybetter[username]["balance"]) + "\nResturning to main menu...")
+        menu(users, userinfotempvariablebecauseitsabouttogetwaybetter, username, password)
     elif ask == "3":
       print("If you want to abort the transfer enter abort")
       while True:
         transferdestination = input("Who would you like to transfer funds to")
         if transferdestination.lower() == "abort":
           print("Returning to main menu...")
-          menu(users, userinfo, username, password)
+          menu(users, userinfotempvariablebecauseitsabouttogetwaybetter, username, password)
         elif transferdestination not in users:
           print("That is not a user establihsed under our bank")
         elif transferdestination in users:
           transferamount = input("How much would you like to transfer?")
           if float(transferamount) < 0:
             print("Please only use positive numbers")
-          elif float(transferamount) <= userinfo[username]["balance"]:
-            userinfo[username]["balance"] -= float(transferamount)
-            userinfo[transferdestination]["balance"] += float(transferamount)
-            userinfo[username]["transfers"].append((transferamount, str(datetime.now()).split(".")[0]))
-            userinfo[transferdestination]["transfers"].append((transferamount, str(datetime.now()).split(".")[0]))
-            print("Transfering " + transferamount + "$ to " + transferdestination + "...")
+          elif float(transferamount) <= userinfotempvariablebecauseitsabouttogetwaybetter[username]["balance"]:
+            userinfotempvariablebecauseitsabouttogetwaybetter[username]["balance"] -= float(transferamount)
+            userinfotempvariablebecauseitsabouttogetwaybetter[transferdestination]["balance"] += float(transferamount)
+            userinfotempvariablebecauseitsabouttogetwaybetter[username]["transfers"].append((transferamount, str(datetime.now()).split(".")[0]))
+            userinfotempvariablebecauseitsabouttogetwaybetter[transferdestination]["transfers"].append((transferamount, str(datetime.now()).split(".")[0]))
+            print("Transfering $" + transferamount + " to " + transferdestination + "...")
             sleep(2)
-            print("\nTransfer Successful\nYour current balance is: " + str(userinfo[username]["balance"]) + "$\nRetunring to main menu")
-            menu(users, userinfo, username, password)
-          elif float(transferamount) > userinfo[username]["balance"]:
+            print("\nTransfer Successful\nYour current balance is: $" + str(userinfotempvariablebecauseitsabouttogetwaybetter[username]["balance"]) + "\nRetunring to main menu")
+            menu(users, userinfotempvariablebecauseitsabouttogetwaybetter, username, password)
+          elif float(transferamount) > userinfotempvariablebecauseitsabouttogetwaybetter[username]["balance"]:
             ("Insufficient funds")
           else:
             print("Invalid input")
     elif ask == "4":
       print("------- Walker Banking -------\n----- " + str(datetime.now()).split(".")[0]) + " -----\n-------------------------------\nUsername: "
-      print("Username\n Password: " + password + "\nYour Balance: " + str(userinfo[username]["balance"]) + "$\nUser Activities\n\n\nYour Withdrawls: \n")
-      for i in userinfo[username]["withdrawls"]:
-        print("      " + i[1] + " " + i[0])
+      print("Username\n Password: " + password + "\nYour Balance: $" + str(userinfotempvariablebecauseitsabouttogetwaybetter[username]["balance"]) + "\nUser Activities\n\n\nYour Withdrawls: \n")
+      for i in userinfotempvariablebecauseitsabouttogetwaybetter[username]["withdrawals"]:
+        print("      " + i[1] + " withdrew $" + i[0])
       print("Your Deposits:\n")
-      for i in userinfo[username]["Deposits"]:
-        print("      "+ i[1] + " " + i[0])
-      print("\n\nYour Transfers:\n")
-      for i in userinfo[username]["Transfers"]:
-        print("     "+i[2]+" Transferred to "+i[1]+" "+i[0])
+      for i in userinfotempvariablebecauseitsabouttogetwaybetter[username]["deposits"]:
+        print("      " + i[1] + " deposited $" + i[0])
+      print("Your Transfers:\n")
+      for i in userinfotempvariablebecauseitsabouttogetwaybetter[username]["transfers"]:
+        print("     $" + i[0] +" transferred at " + i[1])
       print("-------------------------------\nReturning to main menu")
-      menu(users, userinfo, username, password)
+      menu(users, userinfotempvariablebecauseitsabouttogetwaybetter, username, password)
     elif ask == "5":
       while True:
         passwordcheck = input("For Security Reasons, Please enter your 4 digit pin")
-        if passwordcheck != userinfo[username]["pin"]:
+        if passwordcheck != userinfotempvariablebecauseitsabouttogetwaybetter[username]["pin"]:
           print("Incorrect Pin")
-        elif passwordcheck == userinfo[username]["pin"]:
+        elif passwordcheck == userinfotempvariablebecauseitsabouttogetwaybetter[username]["pin"]:
           newpassword = input("Please enter new password")
-          userinfo[username]["password"].replace(newpassword)
+          userinfotempvariablebecauseitsabouttogetwaybetter[username]["password"] = newpassword
+          break
     elif ask =="6":
       print("Logging Out...")
       homescreen()
 
-def admin(users, userinfo, admins, adminname):
+def admin(users, userinfotempvariablebecauseitsabouttogetwaybetter, admins, adminname):
   print("\n---- Admin Menu ----\nPlease choose a option\n1. Add User\n2. Remove User\n3. Display all Users\n4. Logout")
   while True:  
     select = input("Please choose a service")
@@ -138,9 +152,9 @@ def admin(users, userinfo, admins, adminname):
       newuserpassword = input("Please enter the new users passcode")
       users[newusername] = newuserpassword
       newbalance = input("Please enter the balance of this new user")
-      userinfo[newusername] = {"balance": float(newbalance), "deposits": [], "withdrawls": [], "transfers": []}
+      userinfotempvariablebecauseitsabouttogetwaybetter[newusername] = {"balance": float(newbalance), "deposits": [], "withdrawls": [], "transfers": []}
       print(newusername + " has been added as a user")
-      admin(users,userinfo, admins, adminname)
+      admin(users,userinfotempvariablebecauseitsabouttogetwaybetter, admins, adminname)
     elif select == "2":
       while True:
         if admins[adminname]["clearance"] <= 3:
@@ -159,14 +173,14 @@ def admin(users, userinfo, admins, adminname):
             if confirmation == "1":
               print("Cancelling...")
               sleep(.5)
-              admin(users, userinfo, admins, adminname)
+              admin(users, userinfotempvariablebecauseitsabouttogetwaybetter, admins, adminname)
             elif confirmation == "2":
               print("removing....")
               sleep(2)
               print("User removed")
               users.pop(removal)
-              userinfo.pop(removal)
-              admin(users, userinfo, admins, adminname)
+              userinfotempvariablebecauseitsabouttogetwaybetter.pop(removal)
+              admin(users, userinfotempvariablebecauseitsabouttogetwaybetter, admins, adminname)
             else:
               print("Invalid Input")
     elif select == "3" or select.lower() == "display all users":
@@ -181,17 +195,17 @@ def admin(users, userinfo, admins, adminname):
           if infouser not in users:
             print("Invalid Input")
           else:
-            print("Username\n Password: " + str(users[infouser]) + "\Balance: " + str(userinfo[infouser]["balance"]) + "$\nUser Activities\n\n\nWithdrawls: \n")
-            for i in userinfo[infouser]["withdrawals"]:
+            print("Username\n Password: " + str(users[infouser]) + "\Balance: $" + str(userinfotempvariablebecauseitsabouttogetwaybetter[infouser]["balance"]) + "\nUser Activities\n\n\nWithdrawls: \n")
+            for i in userinfotempvariablebecauseitsabouttogetwaybetter[infouser]["withdrawals"]:
               print("      " + i[1] + " " + i[0])
             print("Deposits:\n")
-            for i in userinfo[infouser]["deposits"]:
+            for i in userinfotempvariablebecauseitsabouttogetwaybetter[infouser]["deposits"]:
               print("      "+ i[1] + " " + i[0])
             print("Transfers:\n")
-            for i in userinfo[infouser]["transfers"]:
+            for i in userinfotempvariablebecauseitsabouttogetwaybetter[infouser]["transfers"]:
               print("     "+i[2]+" Transfer "+i[1]+" "+i[0])
         elif moreinfo == "2" or moreinfo.lower() == "close":
-          admin(users, userinfo, admins, adminname)
+          admin(users, userinfotempvariablebecauseitsabouttogetwaybetter, admins, adminname)
     elif select == "4" or select.lower() == "logout":
       print("Logging out...")
       sleep(1.5)
