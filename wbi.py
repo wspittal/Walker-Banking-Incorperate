@@ -1,10 +1,18 @@
-from datetime import datetime; from time import sleep
+# if name1.lower() == ("walker" or "walker spittal") or ("avery" or "avery lassiter") and name2.lower() == ("walker" or "walker spittal") or ("avery" or "avery lassiter") and name1.lower() != name2.lower():
+# don't think I don't see this (Ima show to Avery at lunch lol)
+from datetime import datetime
+from time import sleep
 
-
-users = {"Spencer Karby":"l + bozo + ratio", "Owen Reaser":"academic weapon", "Michael Tomczak":"Genius", "Parker Dillon": "69420"}
-use = ["Spencer Karby", "Owen Reaser", "Michael Tomczak", "Parker Dillon"]
-admins = {"Walker Spittal":{"adminpass": "Hamilton is awesome", "masterpassword": "Avery", "clearance": 8}, "Avery Lassiter":{"adminpass": "coolest person alive", "masterpassword": "Walker", "clearance": 4}}
-userinfo = {"Spencer Karby":{"balance":10, "deposits":[], "withdrawals":[], "transfers":[], "pin": "1234"}, "Owen Reaser":{"balance":100000, "deposits":[], "withdrawals":[], "transfers":[], "pin": "7676"}, "Michael Tomczak":{"balance":904730957, "deposits":[], "withdrawals":[], "transfers":[], "pin": "8888"}, "Parker Dillon":{"balance":9820939709827390, "deposits":[], "withdrawals":[], "transfers":[], "pin": "1234"}}
+admins = ["Walker Spittal", "Avery Lassiter", "Owen Reaser"]
+userinfo = {
+ #"username"        :[Name,              password/adminpass,     admin, pin,    bal,    [d],[w],[t],cl,mstrpass"]}
+  "Spencer Karby"   :["Spencer Karby",   "l + bozo + ratio",     False, "1234", 10,     [], [], [], 1, False],
+  "Owen Reaser"     :["Owen Reaser",     "academic weapon",      True,  "7676", 100000, [], [], [], 8, "bestatcoding"],
+  "Micheal Tomkzak" :["Micheal Tomkzak", "Genius",               False, "8888", 904957, [], [], [], 1, False],
+  "Parker Dillon"   :["Parker Dillon",   "69420",                False, "1234", 982739, [], [], [], 1, False],
+  "Walker Spittal"  :["Walker Spittal",  "Hamilton is awesome",  True,  "7727", 1,      [], [], [], 8, "Avery"],
+  "Avery Lassiter"  :["Avery Lassiter",  "coolest person alive", True,  "0911", 1,      [], [], [], 4, "Walker"]
+}
 
 def homescreen():
     print("     --- Welcome to WS Banking ---\n         -------------------\n        /     Raleigh NC    \ \n        |"+ str(datetime.now()).split(".")[0] + "|\n        \                   /\n         -------------------\n\n1. Login\n2. Exit")
@@ -17,7 +25,7 @@ def homescreen():
           if answer == "1" or answer.lower() == "admin":
             adminlogin(admins)
           elif answer == "2" or answer.lower == "user":
-              userlogin(users)
+              userlogin(userinfo)
           elif answer == "3" or answer.lower() == "go back":
             print("Returning to homescreen...")
             sleep(1)
@@ -36,119 +44,130 @@ def userlogin(users):
     username = input("\nEnter Username")
     password = input("Enter Password")
     if username not in users:
-      print("Invalid Username")
-    elif int(password) != users[username]:
-      print("Wrong Password")
+      print("Invalid Username or Password")
+    elif password != users[username][1]:
+      print("Invalid Username of Password")
     else:
       print("Welcome " + username)
-      menu(users, userinfo, username, password)
+      menu(users, username)
 
 def adminlogin(admins):
+  global userinfo
   while True:  
     adminname = input("\nEnter admin username: ")
     if adminname not in admins:
       print("Invalid Username, Please try again")
       adminlogin(admins)
     adminpassword = input("Enter password: ")
-    if adminpassword != admins[adminname]["adminpass"]:
+    if adminpassword != userinfo[adminname][1]:
       print("Invalid Password, Please try again")
     else:
       print("\nWelcome " + adminname)
-      admin(users, userinfo, admins, adminname)
+      admin(admins, adminname)
 
-def menu(users, userinfo, username, password):
-  print("1. Please enter the service number\n1. Withdraw Money\n2. Deposit Money\n3. Transfer Money\n4. My Account Information\n5. Change Password\n6. bLogout")
+def menu(users, username):
+  print("Please enter the service number\n1. Withdraw Money\n2. Deposit Money\n3. Transfer Money\n4. My Account Information\n5. Change Password\n6. Logout")
   while True:
     ask = input("Please choose a service")
     if ask == "1":
       withdrawl = input("Please enter withdrawl amount")
-      if float(withdrawl) <= userinfo[username]["balance"]:
-        userinfo[username]["balance"] -= float(withdrawl)
-        userinfo[username]["withdrawals"].append((withdrawl, str(datetime.now()).split(".")[0]))
-        print(str(withdrawl) + "$ withdrawn from your account\nnew balance: $" + str(userinfo[username]["balance"]) + "\nReturning to main menu...")
-        menu(users, userinfo, username, password)
-      elif float(withdrawl) > userinfo[username]["balance"]:
-        print("You don't have enough money, your current balance is: " + str(userinfo[username]["balance"]))
+      if float(withdrawl) <= users[username][4]:
+        users[username][4] -= float(withdrawl)
+        users[username][6].append((withdrawl, str(datetime.now()).split(".")[0]))
+        print("$" + str(withdrawl) + " withdrawn from your account\nnew balance: $" + str(users[username][4]) + "\nReturning to main menu...")
+        menu(users, username)
+      elif float(withdrawl) > users[username][4]:
+        print("You don't have enough money, your current balance is: " + str(users[username][4]))
       else:
         print("Bad Input")
     elif ask == "2":
       while True:  
         deposit = input("How much would you like to deposit")
-        userinfo[username]["balance"] += float(deposit)
-        userinfo[username]["deposits"].append((deposit, str(datetime.now()).split(".")[0]))
-        print(deposit + "$ had been added to your account\nnew balance: " + userinfo[username]["balance"] + "\nResturning to main menu...")
-        menu(users, userinfo, username, password)
+        users[username][4] += float(deposit)
+        users[username][5].append((deposit, str(datetime.now()).split(".")[0]))
+        print("$" + deposit + " had been added to your account\nnew balance: " + str(users[username][4]) + "\nResturning to main menu...")
+        menu(users, username)
     elif ask == "3":
       print("If you want to abort the transfer enter abort")
       while True:
         transferdestination = input("Who would you like to transfer funds to")
         if transferdestination.lower() == "abort":
           print("Returning to main menu...")
-          menu(users, userinfo, username, password)
+          menu(users, username)
         elif transferdestination not in users:
           print("That is not a user establihsed under our bank")
         elif transferdestination in users:
           transferamount = input("How much would you like to transfer?")
           if float(transferamount) < 0:
             print("Please only use positive numbers")
-          elif float(transferamount) <= userinfo[username]["balance"]:
-            userinfo[username]["balance"] -= float(transferamount)
-            userinfo[transferdestination]["balance"] += float(transferamount)
-            userinfo[username]["transfers"].append((transferamount, str(datetime.now()).split(".")[0]))
-            userinfo[transferdestination]["transfers"].append((transferamount, str(datetime.now()).split(".")[0]))
-            print("Transfering " + transferamount + "$ to " + transferdestination + "...")
+          elif float(transferamount) <= users[username][4]:
+            users[username][4] -= float(transferamount)
+            users[transferdestination][4] += float(transferamount)
+            users[username][7].append([transferamount, str(datetime.now()).split(".")[0]])
+            users[transferdestination][7].append([transferamount, str(datetime.now()).split(".")[0]])
+            print("Transfering $" + transferamount + " to " + transferdestination + "...")
             sleep(2)
-            print("\nTransfer Successful\nYour current balance is: " + str(userinfo[username]["balance"]) + "$\nRetunring to main menu")
-            menu(users, userinfo, username, password)
-          elif float(transferamount) > userinfo[username]["balance"]:
+            print("\nTransfer Successful\nYour current balance is: $" + str(users[username][4]) + "\nRetunring to main menu")
+            menu(users, username)
+          elif float(transferamount) > users[username][4]:
             ("Insufficient funds")
           else:
             print("Invalid input")
     elif ask == "4":
       print("------- Walker Banking -------\n----- " + str(datetime.now()).split(".")[0]) + " -----\n-------------------------------\nUsername: "
-      print("Username\n Password: " + password + "\nYour Balance: " + str(userinfo[username]["balance"]) + "$\nUser Activities\n\n\nYour Withdrawls: \n")
-      for i in userinfo[username]["withdrawls"]:
-        print("      " + i[1] + " " + i[0])
+      print("Username\n Password: " + users[username][1] + "\nYour Balance: $" + str(users[username][4]) + "\nUser Activities\n\n\nYour Withdrawls: \n")
+      for i in users[username][6]:
+        print("      " + i[1] + " withdrew $" + i[0])
       print("Your Deposits:\n")
-      for i in userinfo[username]["Deposits"]:
-        print("      "+ i[1] + " " + i[0])
-      print("\n\nYour Transfers:\n")
-      for i in userinfo[username]["Transfers"]:
-        print("     "+i[2]+" Transferred to "+i[1]+" "+i[0])
+      for i in users[username][5]:
+        print("      " + i[1] + " deposited $" + i[0])
+      print("Your Transfers:\n")
+      for i in users[username][7]:
+        print("     $" + i[0] +" transferred at " + i[1])
       print("-------------------------------\nReturning to main menu")
-      menu(users, userinfo, username, password)
+      menu(users, username)
     elif ask == "5":
       while True:
         passwordcheck = input("For Security Reasons, Please enter your 4 digit pin")
-        if passwordcheck != userinfo[username]["pin"]:
+        if passwordcheck != users[username][3]:
           print("Incorrect Pin")
-        elif passwordcheck == userinfo[username]["pin"]:
+        elif passwordcheck == users[username][3]:
           newpassword = input("Please enter new password")
-          userinfo[username]["password"].replace(newpassword)
+          users[username][1] = newpassword
+          break
     elif ask =="6":
       print("Logging Out...")
       homescreen()
 
-def admin(users, userinfo, admins, adminname):
+def admin(admins, adminname):
+  global userinfo
+  users = userinfo
   print("\n---- Admin Menu ----\nPlease choose a option\n1. Add User\n2. Remove User\n3. Display all Users\n4. Logout")
-  while True:  
+  while True:
     select = input("Please choose a service")
     if select == "1" or select.lower() == "add user":
       newusername = input("Please enter the new users username")
       newuserpassword = input("Please enter the new users passcode")
-      users[newusername] = newuserpassword
+      newuserpin = input("Please enter this person's pin")
+      newuseradmin = not not input("If this person is an admin, type something before pressing enter. ")
+      if newuseradmin:
+        newusermsrtpass = input("Enter this user's master password")
+        newuserclearance = int(input("Enter this person's clearance"))
+      else:
+        newusermstrpass = False
+        newuserclearance = 1
       newbalance = input("Please enter the balance of this new user")
-      userinfo[newusername] = {"balance": float(newbalance), "deposits": [], "withdrawls": [], "transfers": []}
+      users[newusername] = [newusername, newuserpassword, newuseradmin, newuserpin, newbalance, [], [], [], newuserclearance, newusermstrpass]
       print(newusername + " has been added as a user")
-      admin(users,userinfo, admins, adminname)
+      admin(admins, adminname)
     elif select == "2":
       while True:
-        if admins[adminname]["clearance"] <= 3:
+        if users[adminname][8] <= 3:
           print("Denied, Authorization level is too low")
           break
-        admincheck = input("Please enter masterpassword to continue")
-        if admincheck != admins[adminname]["masterpassword"]:
-          print("Incorrect masterpassword")
+        admincheck = input("Please enter master password to continue")
+        if admincheck != userinfo[adminname][9]:
+          print("Incorrect master password")
         else:
           removal = input("Who would you like to remove?")
           if removal not in users:
@@ -159,20 +178,19 @@ def admin(users, userinfo, admins, adminname):
             if confirmation == "1":
               print("Cancelling...")
               sleep(.5)
-              admin(users, userinfo, admins, adminname)
+              admin(admins, adminname)
             elif confirmation == "2":
               print("removing....")
               sleep(2)
               print("User removed")
               users.pop(removal)
-              userinfo.pop(removal)
-              admin(users, userinfo, admins, adminname)
+              admin(admins, adminname)
             else:
               print("Invalid Input")
     elif select == "3" or select.lower() == "display all users":
       c = 1
       for i in users:
-        print("\n" + str(c) + ". "+ i + " " + users[i])
+        print("\n" + str(c) + ". "+ i + " has a balance of $" + str(users[i][4]))
         c +=1
       while True:  
         moreinfo = input("\nWould you like more info? Enter 1 for more info, else enter 2")
@@ -181,17 +199,17 @@ def admin(users, userinfo, admins, adminname):
           if infouser not in users:
             print("Invalid Input")
           else:
-            print("Username\n Password: " + str(users[infouser]) + "\Balance: " + str(userinfo[infouser]["balance"]) + "$\nUser Activities\n\n\nWithdrawls: \n")
-            for i in userinfo[infouser]["withdrawals"]:
+            print("Username\n Password: " + str(users[infouser][1]) + "\nBalance: $" + str(users[infouser][4]) + "\nUser Activities:\n\nWithdrawls: \n")
+            for i in users[infouser][6]:
               print("      " + i[1] + " " + i[0])
             print("Deposits:\n")
-            for i in userinfo[infouser]["deposits"]:
+            for i in users[infouser][5]:
               print("      "+ i[1] + " " + i[0])
             print("Transfers:\n")
-            for i in userinfo[infouser]["transfers"]:
+            for i in users[infouser][7]:
               print("     "+i[2]+" Transfer "+i[1]+" "+i[0])
         elif moreinfo == "2" or moreinfo.lower() == "close":
-          admin(users, userinfo, admins, adminname)
+          admin(admins, adminname)
     elif select == "4" or select.lower() == "logout":
       print("Logging out...")
       sleep(1.5)
