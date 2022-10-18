@@ -1,15 +1,16 @@
 from datetime import datetime
 from time import sleep
+from random import randint
 
 admins = ["Walker Spittal", "Avery Lassiter", "Owen Reaser"]
 userinfo = {
  #"username"        :[Name,              password/adminpass,     admin, pin,    bal,    [d],[w],[t],cl,mstrpass"]}
   "Spencer Karby"   :["Spencer Karby",   "l + bozo + ratio",     False, "1234", 10,     [], [], [], 1, False],
-  "Owen Reaser"     :["Owen Reaser",     "academic weapon",      True,  "7676", 100000, [], [], [], 8, "bestatcoding"],
-  "Micheal Tomkzak" :["Micheal Tomkzak", "Genius",               False, "8888", 904957, [], [], [], 1, False],
+  "Owen Reaser"     :["Owen Reaser",     "academic weapon",      True,  "7676", 67500,  [], [], [], 8, "bestatcoding"],
+  "Micheal Tomkzak" :["Micheal Tomkzak", "Genius",               False, "8888", 945000, [], [], [], 1, False],
   "Parker Dillon"   :["Parker Dillon",   "69420",                False, "1234", 982739, [], [], [], 1, False],
-  "Walker Spittal"  :["Walker Spittal",  "Hamilton is awesome",  True,  "7727", 1,      [], [], [], 8, "Avery"],
-  "Avery Lassiter"  :["Avery Lassiter",  "coolest person alive", True,  "0911", 1,      [], [], [], 4, "Walker"]
+  "Walker Spittal"  :["Walker Spittal",  "Hamilton is awesome",  True,  "7727", 1,      [], [], [], 8, "jackedness"],
+  "Avery Lassiter"  :["Avery Lassiter",  "coolest person alive", True,  "0911", 1,      [], [], [], 4, "jackedness"]
 }
 
 def homescreen():
@@ -35,7 +36,7 @@ def homescreen():
         exit()
       else:
         print("\nBad Input\n")
-        sleep(.75)
+        sleep(randint(5, 10) / 10)
 
 def userlogin(users):
   while True:
